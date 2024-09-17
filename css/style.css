@@ -1,0 +1,30 @@
+/* style.css */
+
+/* Basic styling for body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* Navbar styling */
+.navbar {
+    margin-bottom: 20px;
+}
+
+/* Jumbotron header */
+.jumbotron {
+    background: url('../images/header-bg.jpg') no-repeat center center/cover;
+    color: #fff;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Footer styling */
+.footer {
+    padding: 20px 0;
+    background-color: #f8f9fa;
+}
