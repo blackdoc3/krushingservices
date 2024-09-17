@@ -33,37 +33,72 @@
     
     <style>
         .container {
-            max-width: 800px;
-            margin-top: 50px;
+            margin-top: 30px;
+        }
+        .card {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <!-- Dashboard -->
     <div class="container">
-        <h2 class="text-center">Welcome to Your Dashboard</h2>
-        <p id="user-email" class="text-center">Your Email: </p>
+        <h2 class="text-center mb-4">Dashboard</h2>
         
-        <!-- Change Password Section -->
-        <h4 class="mt-4">Change Password</h4>
-        <form id="change-password-form">
-            <div class="form-group">
-                <label for="new-password">New Password:</label>
-                <input type="password" class="form-control" id="new-password" required>
+        <!-- Row for profile and change password -->
+        <div class="row">
+            <!-- User Profile Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Your Profile</h5>
+                        <p id="user-email">Your Email: </p>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-warning">Change Password</button>
-        </form>
 
-        <!-- Selected Services Section -->
-        <h4 class="mt-4">Your Selected Services</h4>
-        <ul id="selected-services" class="list-group">
-            <!-- Services will be dynamically inserted here -->
-        </ul>
+            <!-- Change Password Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Change Password</h5>
+                        <form id="change-password-form">
+                            <div class="form-group">
+                                <label for="new-password">New Password:</label>
+                                <input type="password" class="form-control" id="new-password" required>
+                            </div>
+                            <button type="submit" class="btn btn-warning btn-block">Change Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Billing Section -->
-        <h4 class="mt-4">Billing & Payment</h4>
-        <p>Total Amount: <span id="total-amount">$0.00</span></p>
-        <button id="pay-now" class="btn btn-success">Pay Now</button>
+        <!-- Row for services and billing -->
+        <div class="row">
+            <!-- Selected Services Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Your Selected Services</h5>
+                        <ul id="selected-services" class="list-group">
+                            <!-- Services will be dynamically inserted here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing & Payment Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Billing & Payment</h5>
+                        <p>Total Amount: <span id="total-amount">$0.00</span></p>
+                        <button id="pay-now" class="btn btn-success btn-block">Pay Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Logout Button -->
         <button id="logout" class="btn btn-danger btn-block mt-4">Log Out</button>
