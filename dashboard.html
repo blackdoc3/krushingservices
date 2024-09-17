@@ -5,9 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Krushing Services</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Firebase Configuration -->
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDkgB6cYAKCQ3eaQZNtmKPF4Efpgb2jJNA",
+    authDomain: "krushingservices.firebaseapp.com",
+    projectId: "krushingservices",
+    storageBucket: "krushingservices.appspot.com",
+    messagingSenderId: "655189951979",
+    appId: "1:655189951979:web:a08c3baccaeafe1c8a05ae",
+    measurementId: "G-DN5M10J5DD"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+    
     <style>
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin-top: 50px;
         }
     </style>
@@ -17,27 +43,91 @@
     <div class="container">
         <h2 class="text-center">Welcome to Your Dashboard</h2>
         <p id="user-email" class="text-center">Your Email: </p>
-        <button id="logout" class="btn btn-danger btn-block">Log Out</button>
+        
+        <!-- Change Password Section -->
+        <h4 class="mt-4">Change Password</h4>
+        <form id="change-password-form">
+            <div class="form-group">
+                <label for="new-password">New Password:</label>
+                <input type="password" class="form-control" id="new-password" required>
+            </div>
+            <button type="submit" class="btn btn-warning">Change Password</button>
+        </form>
+
+        <!-- Selected Services Section -->
+        <h4 class="mt-4">Your Selected Services</h4>
+        <ul id="selected-services" class="list-group">
+            <!-- Services will be dynamically inserted here -->
+        </ul>
+
+        <!-- Billing Section -->
+        <h4 class="mt-4">Billing & Payment</h4>
+        <p>Total Amount: <span id="total-amount">$0.00</span></p>
+        <button id="pay-now" class="btn btn-success">Pay Now</button>
+
+        <!-- Logout Button -->
+        <button id="logout" class="btn btn-danger btn-block mt-4">Log Out</button>
     </div>
 
     <!-- Scripts -->
     <script>
-        // Check if the user is logged in
-        const isLoggedIn = localStorage.getItem('loggedIn');
-        if (isLoggedIn !== 'true') {
-            alert('You are not logged in.');
-            window.location.href = 'login.html';
+        // Check if the user is logged in and display their email
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('user-email').innerText = 'Your Email: ' + user.email;
+                loadUserServices(); // Load services user opted for
+            } else {
+                alert('You are not logged in.');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Logout button functionality
+        document.getElementById('logout').addEventListener('click', function() {
+            auth.signOut().then(() => {
+                alert('You have been logged out.');
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        });
+
+        // Change password functionality
+        document.getElementById('change-password-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const newPassword = document.getElementById('new-password').value;
+
+            const user = auth.currentUser;
+            user.updatePassword(newPassword).then(() => {
+                alert('Password changed successfully!');
+            }).catch((error) => {
+                alert('Error changing password: ' + error.message);
+            });
+        });
+
+        // Load selected services (for demo, using localStorage)
+        function loadUserServices() {
+            const selectedServices = JSON.parse(localStorage.getItem('selectedServices')) || [];
+            const serviceList = document.getElementById('selected-services');
+            serviceList.innerHTML = ''; // Clear existing services
+
+            let totalAmount = 0;
+            selectedServices.forEach(service => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.textContent = `${service.name} - $${service.price}`;
+                serviceList.appendChild(li);
+                totalAmount += service.price;
+            });
+
+            document.getElementById('total-amount').innerText = `$${totalAmount.toFixed(2)}`;
         }
 
-        // Display the user's email
-        const userEmail = localStorage.getItem('userEmail');
-        document.getElementById('user-email').innerText = 'Your Email: ' + userEmail;
-
-        // Logout button
-        document.getElementById('logout').addEventListener('click', function() {
-            localStorage.setItem('loggedIn', 'false');
-            alert('You have been logged out.');
-            window.location.href = 'login.html';
+        // Dummy payment functionality
+        document.getElementById('pay-now').addEventListener('click', function() {
+            alert('Payment successful!');
+            localStorage.removeItem('selectedServices'); // Clear services after payment
+            loadUserServices(); // Refresh the services list
         });
     </script>
 </body>
