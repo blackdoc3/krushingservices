@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Krushing Services</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard -->
+    <div class="container">
+        <h2 class="text-center">Welcome to Your Dashboard</h2>
+        <p id="user-email" class="text-center">Your Email: </p>
+        <button id="logout" class="btn btn-danger btn-block">Log Out</button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Check if the user is logged in
+        const isLoggedIn = localStorage.getItem('loggedIn');
+        if (isLoggedIn !== 'true') {
+            alert('You are not logged in.');
+            window.location.href = 'login.html';
+        }
+
+        // Display the user's email
+        const userEmail = localStorage.getItem('userEmail');
+        document.getElementById('user-email').innerText = 'Your Email: ' + userEmail;
+
+        // Logout button
+        document.getElementById('logout').addEventListener('click', function() {
+            localStorage.setItem('loggedIn', 'false');
+            alert('You have been logged out.');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
