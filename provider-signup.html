@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Provider Sign-Up - Krushing Services</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Firebase Configuration -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
@@ -22,38 +21,9 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
     </script>
-    <style>
-        .container {
-            max-width: 600px;
-            margin-top: 50px;
-        }
-    </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.html">Krushing Services</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-            </ul>
-            <!-- Sign Up and Log In Links -->
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="select-role.html">Sign Up</a></li>
-                <li class="nav-item"><a class="nav-link" href="login.html">Log In</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Service Provider Sign-Up Form -->
-    <div class="container">
+    <div class="container mt-5">
         <h2>Service Provider Sign-Up</h2>
         <form id="provider-signup-form">
             <div class="form-group">
@@ -69,46 +39,42 @@
                 <input type="password" class="form-control" id="password" required>
             </div>
             <div class="form-group">
-                <label for="confirm-password">Confirm Password:</label>
+                <label for="confirm-password">Re-enter Password:</label>
                 <input type="password" class="form-control" id="confirm-password" required>
             </div>
             <div class="form-group">
                 <label for="service">Choose Service:</label>
                 <select class="form-control" id="service" required>
-                    <option value="">Select a service</option>
                     <option value="Web Development">Web Development</option>
                     <option value="Graphic Design">Graphic Design</option>
                     <option value="SEO Services">SEO Services</option>
                     <option value="Digital Marketing">Digital Marketing</option>
-                    <!-- Add more services as needed -->
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <p id="error-message" class="text-danger mt-3" style="display:none;">Passwords do not match!</p>
         </form>
-        <p class="text-center mt-3">Already have an account? <a href="login.html">Log In</a></p>
     </div>
 
-    <!-- Script for service provider sign-up -->
     <script>
         document.getElementById('provider-signup-form').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
             const service = document.getElementById('service').value;
-            
-            if (name === "" || email === "" || password === "" || confirmPassword === "" || service === "") {
-                alert("Please fill in all fields and select a service.");
-                return;
-            }
 
+            // Check if passwords match
             if (password !== confirmPassword) {
-                alert("Passwords do not match. Please try again.");
+                document.getElementById('error-message').style.display = 'block';
                 return;
+            } else {
+                document.getElementById('error-message').style.display = 'none';
             }
 
+            // Firebase Authentication for sign-up
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
@@ -122,8 +88,9 @@
                         earnings: 0 // default earnings
                     })
                     .then(() => {
-                        alert('Sign-up successful! Redirecting to your dashboard...');
-                        window.location.href = 'provider-dashboard.html'; // Redirect to provider dashboard
+                        alert('Sign-up successful! Redirecting to provider dashboard...');
+                        // Redirect to provider dashboard
+                        window.location.href = 'provider-dashboard.html';
                     });
                 })
                 .catch((error) => {
