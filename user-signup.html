@@ -38,7 +38,12 @@
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" required>
             </div>
+            <div class="form-group">
+                <label for="confirm-password">Re-enter Password:</label>
+                <input type="password" class="form-control" id="confirm-password" required>
+            </div>
             <button type="submit" class="btn btn-primary">Sign Up</button>
+            <p id="error-message" class="text-danger mt-3" style="display:none;">Passwords do not match!</p>
         </form>
     </div>
 
@@ -49,6 +54,15 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('error-message').style.display = 'none';
+            }
 
             // Firebase Authentication for sign-up
             auth.createUserWithEmailAndPassword(email, password)
