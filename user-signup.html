@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Sign-Up - Krushing Services</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -36,26 +32,30 @@
     </div>
 
     <!-- Firebase Configuration and Initialization -->
-    <script>
-        // Your Firebase Configuration
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
+
+        // Firebase Configuration
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyDkgB6cYAKCQ3eaQZNtmKPF4Efpgb2jJNA",
+            authDomain: "krushingservices.firebaseapp.com",
+            projectId: "krushingservices",
+            storageBucket: "krushingservices.appspot.com",
+            messagingSenderId: "655189951979",
+            appId: "1:655189951979:web:a08c3baccaeafe1c8a05ae",
+            measurementId: "G-DN5M10J5DD"
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-    </script>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-    <script>
-        // Event listener for form submission
-        document.getElementById('user-signup-form').addEventListener('submit', function(event) {
+        // Handle user sign-up form submission
+        document.getElementById('user-signup-form').addEventListener('submit', async (event) => {
             event.preventDefault();
             
             const name = document.getElementById('name').value;
@@ -71,26 +71,24 @@
                 document.getElementById('error-message').style.display = 'none';
             }
 
-            // Firebase Authentication for sign-up
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
+            try {
+                // Create user with email and password
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-                    // Add user data to Firestore
-                    db.collection('Customers').doc(user.uid).set({
-                        name: name,
-                        email: email,
-                        role: 'user'  // Saving the role as 'user'
-                    })
-                    .then(() => {
-                        alert('Sign-up successful! Redirecting to user dashboard...');
-                        // Redirect to user dashboard
-                        window.location.href = 'user-dashboard.html';
-                    });
-                })
-                .catch((error) => {
-                    alert('Error: ' + error.message);
+                // Save user info to Firestore
+                await setDoc(doc(db, "Customers", user.uid), {
+                    name: name,
+                    email: email,
+                    role: 'user'
                 });
+
+                alert('Sign-up successful! Redirecting to user dashboard...');
+                window.location.href = 'user-dashboard.html'; // Redirect to dashboard
+            } catch (error) {
+                console.error("Error during sign-up:", error);
+                alert(error.message);
+            }
         });
     </script>
 </body>
