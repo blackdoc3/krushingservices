@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Role - Krushing Services</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 400px;
+            margin-top: 100px;
+            text-align: center;
+        }
+        .role-btn {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign Up as</h2>
+        <button class="btn btn-primary role-btn" onclick="navigateTo('user')">User</button>
+        <button class="btn btn-secondary role-btn" onclick="navigateTo('provider')">Service Provider</button>
+    </div>
+
+    <script>
+        function navigateTo(role) {
+            if (role === 'user') {
+                window.location.href = 'user-signup.html'; // Redirect to user sign-up page
+            } else if (role === 'provider') {
+                window.location.href = 'provider-signup.html'; // Redirect to provider sign-up page
+            }
+        }
+    </script>
+</body>
+</html>
