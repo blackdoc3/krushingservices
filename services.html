@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,40 +6,52 @@
     <title>Services - Krushing Services</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
 </head>
 <body>
 
     <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="index.html">Krushing Services</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="services.html">Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-            </li>
-        </ul>
-        <!-- Updated Sign Up link pointing to the Select Role page -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link btn btn-primary text-white" href="select-role.html">Sign Up</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Krushing Services</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="services.html">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact Us</a>
+                </li>
+            </ul>
+            <!-- Updated Sign Up link pointing to the Select Role page -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary text-white" href="select-role.html">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <!-- Services Content -->
     <section class="container mt-4">
@@ -56,22 +68,13 @@
             <a href="digital-marketing-services.html" class="btn btn-secondary m-2">Digital Marketing</a>
             <a href="blockchain-solutions.html" class="btn btn-secondary m-2">Blockchain Solutions</a>
 
-            
-            <a href="#" class="btn btn-secondary m-2">AI & Machine Learning</a>
-            <a href="#" class="btn btn-secondary m-2">IT Support & Consulting</a>
-            <a href="#" class="btn btn-secondary m-2">Cybersecurity</a>
-            <a href="#" class="btn btn-secondary m-2">Cloud Computing</a>
-            <a href="#" class="btn btn-secondary m-2">E-commerce Solutions</a>
-            <a href="#" class="btn btn-secondary m-2">Human Resources Outsourcing</a>
-            <a href="#" class="btn btn-secondary m-2">Customer Support Services</a>
-            <a href="#" class="btn btn-secondary m-2">Data Entry & Processing</a>
-            <a href="#" class="btn btn-secondary m-2">Accounting & Finance</a>
-            <a href="#" class="btn btn-secondary m-2">Content Creation & Marketing</a>
-            <a href="#" class="btn btn-secondary m-2">Mobile App Development</a>
-            <a href="#" class="btn btn-secondary m-2">Legal Process Outsourcing</a>
-            <a href="#" class="btn btn-secondary m-2">SEO & SEM Services</a>
-            <a href="#" class="btn btn-secondary m-2">Market Research</a>
-            <a href="#" class="btn btn-secondary m-2">Technical Support</a>
+            <!-- Dynamic Section to Load Services from Firestore -->
+            <div id="dynamic-services" class="w-100 mt-4">
+                <h4 class="text-center">Additional Services</h4>
+                <div id="services-list" class="d-flex flex-wrap justify-content-center">
+                    <!-- Services dynamically loaded from Firestore will appear here -->
+                </div>
+            </div>
         </div>
     </section>
 
@@ -89,5 +92,28 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Firestore Script to Load Services -->
+    <script>
+        // Load services dynamically from Firestore
+        db.collection('ServiceProviders').get().then((querySnapshot) => {
+            const servicesList = document.getElementById('services-list');
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const serviceCard = document.createElement('div');
+                serviceCard.classList.add('col-md-4', 'mb-4');
+                serviceCard.innerHTML = `
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">${data.service}</h5>
+                            <p class="card-text">Provider: ${data.name}</p>
+                            <p class="card-text">Price: $${data.price}</p>
+                        </div>
+                    </div>
+                `;
+                servicesList.appendChild(serviceCard);
+            });
+        });
+    </script>
 </body>
 </html>
