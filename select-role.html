@@ -18,18 +18,42 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Krushing Services</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+            </ul>
+            <!-- Sign Up and Log In Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="select-role.html">Sign Up</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Log In</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Role Selection -->
     <div class="container">
         <h2>Sign Up as</h2>
-        <button class="btn btn-primary role-btn" onclick="navigateTo('user')">User</button>
+        <button class="btn btn-primary role-btn" onclick="navigateTo('user')">Customer</button>
         <button class="btn btn-secondary role-btn" onclick="navigateTo('provider')">Service Provider</button>
     </div>
 
+    <!-- Scripts -->
     <script>
         function navigateTo(role) {
             if (role === 'user') {
-                window.location.href = 'user-signup.html'; // Redirect to user sign-up page
+                window.location.href = 'user-signup.html'; // Redirect to customer sign-up page
             } else if (role === 'provider') {
-                window.location.href = 'provider-signup.html'; // Redirect to provider sign-up page
+                window.location.href = 'provider-signup.html'; // Redirect to service provider sign-up page
             }
         }
     </script>
