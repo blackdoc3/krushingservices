@@ -3,24 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In - Krushing Services</title>
+    <title>Login - Krushing Services</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-    <script>
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-    </script>
 </head>
 <body>
     <div class="container mt-5">
@@ -36,44 +20,66 @@
             </div>
             <button type="submit" class="btn btn-primary btn-block">Log In</button>
         </form>
+        <p id="error-message" class="text-danger mt-3" style="display:none;"></p>
     </div>
 
-    <script>
-        document.getElementById('login-form').addEventListener('submit', function(event) {
+    <!-- Firebase Configuration and Initialization -->
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDkgB6cYAKCQ3eaQZNtmKPF4Efpgb2jJNA",
+            authDomain: "krushingservices.firebaseapp.com",
+            projectId: "krushingservices",
+            storageBucket: "krushingservices.appspot.com",
+            messagingSenderId: "655189951979",
+            appId: "1:655189951979:web:a08c3baccaeafe1c8a05ae",
+            measurementId: "G-DN5M10J5DD"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Handle login form submission
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
             event.preventDefault();
-            
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Firebase Authentication
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
+            try {
+                // Sign in the user
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-                    // Fetch the user's role from Firestore
-                    const customerRef = db.collection('Customers').doc(user.uid);
-                    const providerRef = db.collection('ServiceProviders').doc(user.uid);
+                // Check if the user is a customer or service provider by looking in Firestore
+                const customerDoc = await getDoc(doc(db, "Customers", user.uid));
+                const providerDoc = await getDoc(doc(db, "ServiceProviders", user.uid));
 
-                    customerRef.get().then((doc) => {
-                        if (doc.exists) {
-                            // If the document exists in Customers, redirect to user dashboard
-                            window.location.href = 'user-dashboard.html';
-                        } else {
-                            // Check if the document exists in ServiceProviders
-                            providerRef.get().then((providerDoc) => {
-                                if (providerDoc.exists) {
-                                    // Redirect to provider dashboard
-                                    window.location.href = 'provider-dashboard.html';
-                                } else {
-                                    alert('Role not found, please contact support.');
-                                }
-                            });
-                        }
-                    });
-                })
-                .catch((error) => {
-                    alert('Error: ' + error.message);
-                });
+                if (customerDoc.exists()) {
+                    // If the user is a customer, redirect to the user dashboard
+                    alert('Login successful! Redirecting to user dashboard...');
+                    window.location.href = 'user-dashboard.html';
+                } else if (providerDoc.exists()) {
+                    // If the user is a service provider, redirect to the provider dashboard
+                    alert('Login successful! Redirecting to provider dashboard...');
+                    window.location.href = 'provider-dashboard.html';
+                } else {
+                    // If the role isn't found, show an error message
+                    throw new Error('Role not found. Please contact support.');
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                document.getElementById('error-message').innerText = error.message;
+                document.getElementById('error-message').style.display = 'block';
+            }
         });
     </script>
 </body>
