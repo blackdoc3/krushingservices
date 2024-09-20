@@ -69,6 +69,10 @@
                 <input type="password" class="form-control" id="password" required>
             </div>
             <div class="form-group">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirm-password" required>
+            </div>
+            <div class="form-group">
                 <label for="service">Choose Service:</label>
                 <select class="form-control" id="service" required>
                     <option value="">Select a service</option>
@@ -92,10 +96,16 @@
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
             const service = document.getElementById('service').value;
             
-            if (name === "" || email === "" || password === "" || service === "") {
+            if (name === "" || email === "" || password === "" || confirmPassword === "" || service === "") {
                 alert("Please fill in all fields and select a service.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match. Please try again.");
                 return;
             }
 
