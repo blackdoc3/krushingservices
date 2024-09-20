@@ -1,74 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krushing Services</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Krushing Services - Home</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Hero section */
+        .hero {
+            background-image: url('images/hero-background.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+        }
+
+        /* Service icons */
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            background-color: #f8f9fa;
+            padding: 50px 20px;
+            margin-top: 50px;
+        }
+
+        .testimonial h2 {
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0;
+        }
+
+        .footer a {
+            color: #f8f9fa;
+        }
+
+        .footer a:hover {
+            color: #007bff;
+        }
+    </style>
 </head>
+
 <body>
-   
-   <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="index.html">Krushing Services</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="services.html">Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-            </li>
-        </ul>
-        <!-- Updated Sign Up link pointing to the Select Role page -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link btn btn-primary text-white" href="select-role.html">Sign Up</a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
-
-
-    <!-- Homepage Header without Background Image -->
-    <header class="jumbotron jumbotron-fluid" style="height: 400px; color: white; background-color: #007bff;">
-        <div class="container text-center h-100 d-flex flex-column justify-content-center">
-            <h1 class="display-4">Welcome to Krushing Services</h1>
-            <p class="lead">Providing top-notch outsourcing solutions worldwide</p>
-            <a href="services.html" class="btn btn-primary btn-lg">Explore Services</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Krushing Services</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="services.html">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact Us</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary text-white" href="select-role.html">Sign Up</a>
+                </li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
-    <!-- Main Content Section -->
-    <section class="container mt-5">
-        <h2>Why Choose Us?</h2>
-        <p>We offer reliable and cost-effective outsourcing solutions tailored to your business needs. With a team of experienced professionals, we ensure quality and efficiency in every project we undertake.</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1>Welcome to Krushing Services</h1>
+            <p>Your trusted outsourcing partner for business success.</p>
+            <a href="services.html" class="btn btn-primary btn-lg">Explore Services</a>
+            <a href="select-role.html" class="btn btn-secondary btn-lg">Join Us</a>
+        </div>
+    </section>
+
+    <!-- Services Highlights Section -->
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Our Key Services</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <i class="fas fa-laptop-code service-icon"></i>
+                <h4>Web Development</h4>
+                <p>Build responsive, secure, and scalable websites to boost your online presence.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-chart-line service-icon"></i>
+                <h4>Digital Marketing</h4>
+                <p>Grow your brand with tailored digital marketing strategies.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-cogs service-icon"></i>
+                <h4>Engineering Services</h4>
+                <p>Innovative engineering solutions for your business needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonial">
+        <div class="container">
+            <h2 class="text-center">What Our Clients Say</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <blockquote class="blockquote">
+                        <p>"Krushing Services helped us scale our digital operations swiftly and seamlessly. Highly recommend!"</p>
+                        <footer class="blockquote-footer">John Doe, CEO of XYZ Corp.</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-6">
+                    <blockquote class="blockquote">
+                        <p>"Their web development team delivered an excellent product on time and within budget. Fantastic experience."</p>
+                        <footer class="blockquote-footer">Jane Smith, Founder of TechSolutions</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="container text-center my-5">
+        <h2>Ready to Take Your Business to the Next Level?</h2>
+        <a href="select-role.html" class="btn btn-primary btn-lg">Join as a Service Provider</a>
+        <a href="services.html" class="btn btn-secondary btn-lg">View Our Services</a>
     </section>
 
     <!-- Footer -->
-    <footer class="footer bg-light text-center mt-4">
-    <div class="container">
-        <p>&copy; 2024 Krushing Services. All Rights Reserved.</p>
-        <p>
-            <a href="cookie-policy.html">Cookie Policy</a> | 
-            <a href="data-protection.html">Data Protection</a>
-        </p>
-      </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>Email: support@krushingservices.com</p>
+                    <p>Phone: +1 234 567 890</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Our Services</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="select-role.html">Join Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <a href="#"><i class="fab fa-facebook fa-2x mr-3"></i></a>
+                    <a href="#"><i class="fab fa-twitter fa-2x mr-3"></i></a>
+                    <a href="#"><i class="fab fa-linkedin fa-2x"></i></a>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center">&copy; 2024 Krushing Services. All Rights Reserved.</p>
+            <p class="text-center">
+                <a href="cookie-policy.html">Cookie Policy</a> | 
+                <a href="data-protection.html">Data Protection</a>
+            </p>
+        </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
